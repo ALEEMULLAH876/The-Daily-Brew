@@ -4,27 +4,35 @@
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
 
+  /* Forest Green: Preserved #183D32 with richer #123329 accent & deep #0B1E18 */
   --color-forest: #183D32;
-  --color-forest-dark: #0E251E;
+  --color-forest-deep: #123329;
+  --color-forest-dark: #0B1E18;
   --color-forest-light: #255B4B;
   --color-forest-subtle: #e6edea;
 
+  /* Warm Cream: Preserved #F5EBDD with crisp #FAF5ED & pure card white */
   --color-cream: #F5EBDD;
   --color-cream-light: #FAF5ED;
-  --color-cream-card: #FDFBF7;
+  --color-cream-card: #FFFFFF;
   --color-cream-dark: #E8D9C5;
 
+  /* Soft Beige: Preserved #E8D8C3 with gentle section tone #EFE5D8 */
   --color-beige: #E8D8C3;
-  --color-beige-soft: #F2E8DC;
+  --color-beige-soft: #EFE5D8;
 
+  /* Terracotta: Preserved #C66A42 with WCAG AA button tone #B8552E */
   --color-terracotta: #C66A42;
-  --color-terracotta-dark: #A54F2A;
+  --color-terracotta-rich: #B8552E;
+  --color-terracotta-dark: #9E4420;
   --color-terracotta-light: #DD7F55;
   --color-terracotta-soft: #F6E6DE;
 
+  /* Espresso: Preserved #30251F with high-contrast text tones #211915 & #382C24 */
   --color-espresso: #30251F;
-  --color-espresso-muted: #66554B;
-  --color-espresso-light: #948277;
+  --color-espresso-deep: #211915;
+  --color-espresso-muted: #382C24;
+  --color-espresso-light: #5E4A3E;
 }
 
 html {

@@ -44,7 +44,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F5EBDD] text-[#30251F] selection:bg-[#C66A42] selection:text-white overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-[#F5EBDD] text-[#211915] selection:bg-[#B8552E] selection:text-white overflow-x-hidden">
       {/* 1. Header (Sticky navigation & brand identity) */}
       <Header activeSection={activeSection} />
 
