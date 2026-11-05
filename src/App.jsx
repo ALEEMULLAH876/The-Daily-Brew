@@ -5,15 +5,26 @@ import About from './components/About';
 import Menu from './components/Menu';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import SectionDivider from './components/SectionDivider';
 
+/**
+ * The Daily Brew - Main Application Component
+ * 
+ * Strict Section Order:
+ * 1. Home (Hero Banner)
+ * 2. About (Philosophy & Pillars)
+ * 3. Menu (4 Compulsory Items with Exact Prices)
+ * 4. Contact (Email, Phone, Chennai Location)
+ * 5. Footer (Official Copyright & Quick Links)
+ */
 export default function App() {
   const [activeSection, setActiveSection] = useState('home');
 
+  // Active section tracking for navbar indicator
   useEffect(() => {
     const handleScroll = () => {
-      // Order strictly matches page layout: Home -> About -> Menu -> Contact
       const sections = ['home', 'about', 'menu', 'contact'];
-      const scrollPosition = window.scrollY + 180;
+      const scrollPosition = window.scrollY + 220;
 
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
@@ -41,11 +52,20 @@ export default function App() {
         {/* Section 1: Home (Homepage Banner & Hero) */}
         <Hero />
 
-        {/* Section 2: About (Moved immediately above Menu as requested) */}
+        {/* Subtle Editorial Divider */}
+        <SectionDivider />
+
+        {/* Section 2: About */}
         <About />
+
+        {/* Subtle Editorial Divider */}
+        <SectionDivider />
 
         {/* Section 3: Our Menu */}
         <Menu />
+
+        {/* Subtle Editorial Divider */}
+        <SectionDivider />
 
         {/* Section 4: Contact */}
         <Contact />

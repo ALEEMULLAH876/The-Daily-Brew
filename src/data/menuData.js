@@ -1,3 +1,13 @@
+/**
+ * The Daily Brew - Menu Data
+ * 
+ * Strict PDF Requirements:
+ * 1. Cappuccino — ₹150 (Image 2: 02_alternate_cappuccino.jpg)
+ * 2. Cold Coffee — ₹180 (Image 3: 03_alternate_iced_coffee.jpg)
+ * 3. Classic Sandwich — ₹120 (Image 4: 04_alternate_sandwich.jpg)
+ * 4. Chocolate Brownie — ₹100 (Image 5: 05_alternate_brownie.jpg)
+ */
+
 export const menuItems = [
   {
     id: 'cappuccino',
