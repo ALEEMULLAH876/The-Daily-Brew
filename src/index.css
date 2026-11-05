@@ -14,6 +14,9 @@
   --color-cream-card: #FDFBF7;
   --color-cream-dark: #E8D9C5;
 
+  --color-beige: #E8D8C3;
+  --color-beige-soft: #F2E8DC;
+
   --color-terracotta: #C66A42;
   --color-terracotta-dark: #A54F2A;
   --color-terracotta-light: #DD7F55;
@@ -26,6 +29,8 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -33,6 +38,9 @@ body {
   background-color: var(--color-cream);
   color: var(--color-espresso);
   overflow-x: hidden;
+  max-width: 100vw;
+  margin: 0;
+  padding: 0;
 }
 
 /* Custom scrollbar */
@@ -50,7 +58,7 @@ body {
   background: #A54F2A;
 }
 
-/* Grain texture overlay for luxury editorial feel */
+/* Texture overlay for luxury editorial feel */
 .bg-grain {
   background-image: radial-gradient(rgba(48, 37, 31, 0.05) 1px, transparent 0);
   background-size: 24px 24px;

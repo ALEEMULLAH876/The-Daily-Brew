@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import Menu from './components/Menu';
 import About from './components/About';
+import Menu from './components/Menu';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -11,8 +11,9 @@ export default function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'menu', 'about', 'contact'];
-      const scrollPosition = window.scrollY + 200;
+      // Order strictly matches page layout: Home -> About -> Menu -> Contact
+      const sections = ['home', 'about', 'menu', 'contact'];
+      const scrollPosition = window.scrollY + 180;
 
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
@@ -32,25 +33,25 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F5EBDD] text-[#30251F] selection:bg-[#C66A42] selection:text-white">
-      {/* 1. Header Section */}
+    <div className="min-h-screen flex flex-col bg-[#F5EBDD] text-[#30251F] selection:bg-[#C66A42] selection:text-white overflow-x-hidden">
+      {/* 1. Header (Sticky navigation & brand identity) */}
       <Header activeSection={activeSection} />
 
       <main className="flex-grow">
-        {/* 2. Homepage Banner (Hero) Section */}
+        {/* Section 1: Home (Homepage Banner & Hero) */}
         <Hero />
 
-        {/* 3. Our Menu Section */}
-        <Menu />
-
-        {/* 4. About Us Section */}
+        {/* Section 2: About (Moved immediately above Menu as requested) */}
         <About />
 
-        {/* 5. Contact Section */}
+        {/* Section 3: Our Menu */}
+        <Menu />
+
+        {/* Section 4: Contact */}
         <Contact />
       </main>
 
-      {/* 6. Footer Section */}
+      {/* Section 5: Footer */}
       <Footer />
     </div>
   );
