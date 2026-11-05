@@ -12,6 +12,10 @@ import QuickViewModal from './QuickViewModal';
  * - Cold Coffee – ₹180 (Image 3)
  * - Classic Sandwich – ₹120 (Image 4)
  * - Chocolate Brownie – ₹100 (Image 5)
+ * 
+ * Image Alignment & Sizing:
+ * Uniform aspect-square containers with edge-to-edge object-cover,
+ * eliminating all white strips, gaps, and inconsistent sizing.
  */
 export default function Menu() {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -85,7 +89,7 @@ export default function Menu() {
           </div>
         </motion.div>
 
-        {/* 4 Compulsory Menu Items Grid with Staggered Scroll Animations */}
+        {/* 4 Compulsory Menu Items Grid with Uniform Sizing & Alignment */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 lg:gap-8">
           {filteredItems.map((item, index) => (
             <motion.div
@@ -96,8 +100,8 @@ export default function Menu() {
               transition={{ duration: 0.5, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="group bg-[#FDFBF7] rounded-2xl sm:rounded-3xl overflow-hidden border border-[#183D32]/12 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
             >
-              {/* Image Container with Natural Aspect Ratio matching ~4/4.6 */}
-              <div className="relative aspect-[4/4.6] w-full overflow-hidden bg-[#F5EBDD]/60 flex items-center justify-center">
+              {/* Image Container: Consistent Aspect-Square Framing Across All Cards */}
+              <div className="relative aspect-square w-full overflow-hidden bg-[#FAF5ED] flex items-center justify-center">
                 <img
                   src={item.image}
                   alt={item.name}

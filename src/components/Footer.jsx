@@ -18,12 +18,17 @@ export default function Footer() {
     { name: 'Contact', href: '#contact' },
   ];
 
-  const handleNavClick = (e, href) => {
-    e.preventDefault();
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
+  const scrollToSection = (targetHref) => {
+    const id = targetHref.replace('#', '');
+    const element = document.getElementById(id);
+    if (!element) return;
+    const header = document.querySelector('header');
+    const headerHeight = header ? header.getBoundingClientRect().height : 70;
+    const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
+    window.scrollTo({
+      top: Math.max(0, elementTop - headerHeight - 12),
+      behavior: 'smooth'
+    });
   };
 
   return (
@@ -32,10 +37,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10 pb-8 sm:pb-10 border-b border-white/10 items-start">
           {/* Brand Info & 06_alternate_logo.jpg */}
           <div className="md:col-span-5 space-y-3.5">
-            <a
-              href="#home"
-              onClick={(e) => handleNavClick(e, '#home')}
-              className="inline-flex items-center gap-3 group cursor-pointer min-h-[44px]"
+            <button
+              type="button"
+              onClick={() => scrollToSection('#home')}
+              className="inline-flex items-center gap-3 group cursor-pointer min-h-[44px] text-left border-none bg-transparent p-0"
             >
               <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden border border-[#C66A42]/50 bg-[#FAF5ED] shadow-sm p-0.5 flex items-center justify-center shrink-0 group-hover:border-[#C66A42] transition-colors">
                 <img
@@ -52,7 +57,7 @@ export default function Footer() {
                   Good Coffee. Good Food. Good Moments.
                 </span>
               </div>
-            </a>
+            </button>
 
             <p className="text-xs sm:text-sm text-[#FAF5ED]/75 max-w-sm leading-relaxed">
               Chennai’s destination for artisanal coffee, fresh gourmet bites, and heartfelt moments of recharge and connection.
@@ -67,13 +72,13 @@ export default function Footer() {
             <ul className="space-y-1.5 sm:space-y-2">
               {navLinks.map((link) => (
                 <li key={link.name}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
-                    className="text-xs sm:text-sm text-[#FAF5ED]/80 hover:text-[#C66A42] active:scale-95 transition-all py-1 inline-block cursor-pointer min-h-[32px] flex items-center"
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection(link.href)}
+                    className="text-xs sm:text-sm text-[#FAF5ED]/80 hover:text-[#C66A42] active:scale-95 transition-all py-1 inline-flex items-center cursor-pointer min-h-[32px] border-none bg-transparent p-0"
                   >
                     {link.name}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -118,7 +123,8 @@ export default function Footer() {
 
           <button
             onClick={scrollToTop}
-            className="inline-flex items-center gap-2 px-4 py-2 min-h-[44px] rounded-full bg-white/5 hover:bg-white/10 active:scale-95 text-[#FAF5ED] text-xs font-medium transition-all cursor-pointer shadow-sm hover:shadow"
+            type="button"
+            className="inline-flex items-center gap-2 px-4 py-2 min-h-[44px] rounded-full bg-white/5 hover:bg-white/10 active:scale-95 text-[#FAF5ED] text-xs font-medium transition-all cursor-pointer shadow-sm hover:shadow border-none"
             aria-label="Back to top"
           >
             <span>Back to top</span>

@@ -11,10 +11,15 @@ import { motion } from 'framer-motion';
 export default function About() {
   const scrollToMenu = (e) => {
     e.preventDefault();
-    const menuSection = document.querySelector('#menu');
-    if (menuSection) {
-      menuSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    const element = document.getElementById('menu');
+    if (!element) return;
+    const header = document.querySelector('header');
+    const headerHeight = header ? header.getBoundingClientRect().height : 70;
+    const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
+    window.scrollTo({
+      top: Math.max(0, elementTop - headerHeight - 12),
+      behavior: 'smooth'
+    });
   };
 
   const pillars = [

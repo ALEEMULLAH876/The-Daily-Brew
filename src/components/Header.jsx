@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 /**
  * Header Component
- * Sticky navigation with brand identity, smooth scrolling, and mobile drawer.
+ * Sticky navigation with brand identity, guaranteed mobile navigation,
+ * smooth scrolling, and mobile drawer.
  * Section order: Home -> About -> Menu -> Contact
  */
 export default function Header({ activeSection }) {
@@ -39,14 +40,31 @@ export default function Header({ activeSection }) {
     { name: 'Contact', href: '#contact', subtitle: 'Chennai' },
   ];
 
-  // Smooth scroll handler with header offset
-  const handleNavClick = (e, href) => {
-    e.preventDefault();
+  /**
+   * Robust smooth scroll handler for both mobile & desktop.
+   * Calculates exact target position taking sticky header into account.
+   * Small timeout ensures mobile menu drawer animation does not cancel smooth scroll.
+   */
+  const scrollToSection = (targetHref) => {
+    // Close mobile menu first
     setMobileMenuOpen(false);
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
+
+    const id = targetHref.replace('#', '');
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    // Small delay allows mobile drawer to collapse without aborting browser scroll
+    setTimeout(() => {
+      const header = document.querySelector('header');
+      const headerHeight = header ? header.getBoundingClientRect().height : 70;
+      const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
+      const targetPosition = Math.max(0, elementTop - headerHeight - 12);
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    }, 80);
   };
 
   return (
@@ -59,11 +77,11 @@ export default function Header({ activeSection }) {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-2 sm:gap-4">
-          {/* Brand Logo & Name (Touch target >= 44px) */}
-          <a
-            href="#home"
-            onClick={(e) => handleNavClick(e, '#home')}
-            className="flex items-center gap-2 sm:gap-3 group transition-transform duration-200 active:scale-95 shrink-0 cursor-pointer min-h-[44px]"
+          {/* Brand Logo & Name */}
+          <button
+            type="button"
+            onClick={() => scrollToSection('#home')}
+            className="flex items-center gap-2 sm:gap-3 group transition-transform duration-200 active:scale-95 shrink-0 cursor-pointer min-h-[44px] text-left bg-transparent border-none p-0"
             aria-label="The Daily Brew - Home"
           >
             {/* 06_alternate_logo.jpg: Preserved uncropped with rounded badge & object-contain */}
@@ -82,18 +100,18 @@ export default function Header({ activeSection }) {
                 Café & Roastery · Chennai
               </span>
             </div>
-          </a>
+          </button>
 
-          {/* Desktop Navigation: Home | About | Menu | Contact with Framer Motion sliding pill indicator */}
+          {/* Desktop Navigation: Home | About | Menu | Contact */}
           <nav className="hidden md:flex items-center gap-1 lg:gap-1.5 p-1 bg-[#E8D8C3]/35 rounded-full border border-[#183D32]/8" aria-label="Main Navigation">
             {navLinks.map((link) => {
               const isActive = activeSection === link.href.substring(1);
               return (
-                <a
+                <button
                   key={link.name}
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className={`relative px-4 py-2 text-xs sm:text-sm font-medium tracking-wide transition-colors duration-200 rounded-full cursor-pointer z-10 ${
+                  type="button"
+                  onClick={() => scrollToSection(link.href)}
+                  className={`relative px-4 py-2 text-xs sm:text-sm font-medium tracking-wide transition-colors duration-200 rounded-full cursor-pointer z-10 border-none bg-transparent ${
                     isActive
                       ? 'text-[#FAF5ED] font-semibold'
                       : 'text-[#30251F] hover:text-[#183D32] hover:bg-[#FAF5ED]/50'
@@ -107,21 +125,21 @@ export default function Header({ activeSection }) {
                       transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                     />
                   )}
-                </a>
+                </button>
               );
             })}
           </nav>
 
           {/* Desktop Right CTA Pill */}
           <div className="hidden lg:flex items-center gap-3">
-            <a
-              href="#menu"
-              onClick={(e) => handleNavClick(e, '#menu')}
-              className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-[#FAF5ED] bg-[#C66A42] hover:bg-[#A54F2A] active:scale-[0.98] rounded-full transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer min-h-[40px]"
+            <button
+              type="button"
+              onClick={() => scrollToSection('#menu')}
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-[#FAF5ED] bg-[#C66A42] hover:bg-[#A54F2A] active:scale-[0.98] rounded-full transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer min-h-[40px] border-none"
             >
               <Coffee className="w-3.5 h-3.5" />
               <span>Explore Our Menu</span>
-            </a>
+            </button>
           </div>
 
           {/* Mobile Menu Button (Accessible touch target >= 44px) */}
@@ -129,7 +147,7 @@ export default function Header({ activeSection }) {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               type="button"
-              className="p-2.5 min-w-[44px] min-h-[44px] rounded-xl text-[#183D32] hover:bg-[#183D32]/10 active:scale-95 transition-all flex items-center justify-center cursor-pointer"
+              className="p-2.5 min-w-[44px] min-h-[44px] rounded-xl text-[#183D32] hover:bg-[#183D32]/10 active:scale-95 transition-all flex items-center justify-center cursor-pointer border-none bg-transparent"
               aria-expanded={mobileMenuOpen}
               aria-label="Toggle navigation menu"
             >
@@ -139,47 +157,47 @@ export default function Header({ activeSection }) {
         </div>
       </div>
 
-      {/* Mobile Navigation Drawer with AnimatePresence */}
+      {/* Mobile Navigation Drawer with Guaranteed Functionality */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden overflow-hidden border-t border-[#183D32]/10 mt-2 bg-[#FAF5ED]/98 backdrop-blur-xl shadow-2xl max-h-[calc(100vh-76px)] overflow-y-auto"
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="md:hidden overflow-hidden border-t border-[#183D32]/10 mt-2 bg-[#FAF5ED] shadow-2xl relative z-50 pointer-events-auto max-h-[calc(100vh-76px)] overflow-y-auto"
           >
             <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-1.5">
               {navLinks.map((link) => {
                 const isActive = activeSection === link.href.substring(1);
                 return (
-                  <a
+                  <button
                     key={link.name}
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
-                    className={`flex items-center justify-between px-4 py-3 min-h-[48px] rounded-xl text-base font-medium transition-all duration-150 active:scale-[0.98] ${
+                    type="button"
+                    onClick={() => scrollToSection(link.href)}
+                    className={`w-full flex items-center justify-between px-4 py-3.5 min-h-[48px] rounded-xl text-base font-medium transition-all duration-150 active:scale-[0.98] cursor-pointer text-left border-none ${
                       isActive
                         ? 'bg-[#183D32] text-[#FAF5ED]'
-                        : 'text-[#30251F] hover:bg-[#183D32]/8'
+                        : 'text-[#30251F] bg-transparent hover:bg-[#183D32]/8'
                     }`}
                   >
                     <span className="font-serif font-semibold">{link.name}</span>
                     <span className={`text-xs ${isActive ? 'text-[#FAF5ED]/80' : 'text-[#66554B]'}`}>
                       {link.subtitle}
                     </span>
-                  </a>
+                  </button>
                 );
               })}
 
               <div className="pt-2 pb-1 border-t border-[#183D32]/10 mt-1">
-                <a
-                  href="#menu"
-                  onClick={(e) => handleNavClick(e, '#menu')}
-                  className="w-full flex items-center justify-center gap-2 py-3.5 min-h-[48px] text-xs font-semibold uppercase tracking-wider text-[#FAF5ED] bg-[#C66A42] hover:bg-[#A54F2A] active:scale-[0.98] rounded-xl shadow-sm transition-all cursor-pointer"
+                <button
+                  type="button"
+                  onClick={() => scrollToSection('#menu')}
+                  className="w-full flex items-center justify-center gap-2 py-3.5 min-h-[48px] text-xs font-semibold uppercase tracking-wider text-[#FAF5ED] bg-[#C66A42] hover:bg-[#A54F2A] active:scale-[0.98] rounded-xl shadow-sm transition-all cursor-pointer border-none"
                 >
                   <Coffee className="w-4 h-4" />
                   <span>Explore Our Menu</span>
-                </a>
+                </button>
               </div>
             </div>
           </motion.div>

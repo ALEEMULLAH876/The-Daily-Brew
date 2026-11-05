@@ -13,18 +13,28 @@ import { motion } from 'framer-motion';
 export default function Hero() {
   const scrollToMenu = (e) => {
     e.preventDefault();
-    const menuSection = document.querySelector('#menu');
-    if (menuSection) {
-      menuSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    const element = document.getElementById('menu');
+    if (!element) return;
+    const header = document.querySelector('header');
+    const headerHeight = header ? header.getBoundingClientRect().height : 70;
+    const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
+    window.scrollTo({
+      top: Math.max(0, elementTop - headerHeight - 12),
+      behavior: 'smooth'
+    });
   };
 
   const scrollToAbout = (e) => {
     e.preventDefault();
-    const aboutSection = document.querySelector('#about');
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    const element = document.getElementById('about');
+    if (!element) return;
+    const header = document.querySelector('header');
+    const headerHeight = header ? header.getBoundingClientRect().height : 70;
+    const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
+    window.scrollTo({
+      top: Math.max(0, elementTop - headerHeight - 12),
+      behavior: 'smooth'
+    });
   };
 
   return (
