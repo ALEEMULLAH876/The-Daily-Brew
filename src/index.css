@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+
+  --color-forest: #183D32;
+  --color-forest-dark: #0E251E;
+  --color-forest-light: #255B4B;
+  --color-forest-subtle: #e6edea;
+
+  --color-cream: #F5EBDD;
+  --color-cream-light: #FAF5ED;
+  --color-cream-card: #FDFBF7;
+  --color-cream-dark: #E8D9C5;
+
+  --color-terracotta: #C66A42;
+  --color-terracotta-dark: #A54F2A;
+  --color-terracotta-light: #DD7F55;
+  --color-terracotta-soft: #F6E6DE;
+
+  --color-espresso: #30251F;
+  --color-espresso-muted: #66554B;
+  --color-espresso-light: #948277;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-cream);
+  color: var(--color-espresso);
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F5EBDD;
+}
+::-webkit-scrollbar-thumb {
+  background: #C66A42;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A54F2A;
+}
+
+/* Grain texture overlay for luxury editorial feel */
+.bg-grain {
+  background-image: radial-gradient(rgba(48, 37, 31, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
